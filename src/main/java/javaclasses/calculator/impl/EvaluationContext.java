@@ -6,8 +6,11 @@ import java.util.Deque;
 public class EvaluationContext {
 
     private final Deque<Double> operandStack = new ArrayDeque<>();
-    private final Deque<BinaryOperator> operatorStack = new ArrayDeque<>();
-    private final Deque<Integer> bracketStack = new ArrayDeque<>();
+    private final Deque<Deque<BinaryOperator>> operatorStack = new ArrayDeque<>();
+
+    public EvaluationContext(){
+        this.operatorStack.push(new ArrayDeque<>());
+    }
 
     public void pushNumber(double value) {
         operandStack.push(value);
@@ -15,15 +18,15 @@ public class EvaluationContext {
 
     public double getResult() {
 
-        while (!operatorStack.isEmpty()) {
+        while (!operatorStack.peek().isEmpty()) {
             popTopOperator();
         }
-
         return operandStack.pop();
     }
 
     private void popTopOperator() {
-        final BinaryOperator operator = operatorStack.pop();
+
+        final BinaryOperator operator = operatorStack.peek().pop();
         final Double rightOperand = operandStack.pop();
         final Double leftOperand = operandStack.pop();
         final double result = operator.evaluate(leftOperand, rightOperand);
@@ -31,34 +34,20 @@ public class EvaluationContext {
     }
 
     public void pushBinaryOperator(BinaryOperator operator) {
-        if (bracketStack.isEmpty()) {
-            checkPriorityAndPush(operator);
-        } else checkPriorityWithBrackets(operator);
+        while (!operatorStack.peek().isEmpty() && operator.compareTo(operatorStack.peek().peek()) != 1){
+            popTopOperator();
+        }
+        operatorStack.peek().push(operator);
     }
 
     public void pushOpeningBracket() {
-        bracketStack.push(operatorStack.size());
+        operatorStack.push(new ArrayDeque<>());
     }
 
     public void pushClosingBracket() {
-        while (operatorStack.size() > bracketStack.peek()) {
+        while (!operatorStack.peek().isEmpty()) {
             popTopOperator();
         }
-        bracketStack.pop();
-    }
-
-    private void checkPriorityAndPush(BinaryOperator operator) {
-        while (!operatorStack.isEmpty() && operator.compareTo(operatorStack.peek()) != 1) {
-            popTopOperator();
-        }
-        operatorStack.push(operator);
-
-    }
-
-    private void checkPriorityWithBrackets(BinaryOperator operator) {
-        while (!operatorStack.isEmpty() && operator.compareTo(operatorStack.peek()) != 1 && bracketStack.peek() > operatorStack.size()) {
-            popTopOperator();
-        }
-        operatorStack.push(operator);
+        operatorStack.pop();
     }
 }
