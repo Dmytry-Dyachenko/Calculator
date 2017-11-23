@@ -1,8 +1,11 @@
 package javaclasses.calculator.impl.function;
 
-import javaclasses.calculator.CalculationException;
+
 import javaclasses.calculator.impl.CalculatorImpl;
 import javaclasses.calculator.impl.Function;
+
+import java.util.Deque;
+import java.util.List;
 
 /**
  * Implementation of the sum function.
@@ -10,16 +13,12 @@ import javaclasses.calculator.impl.Function;
 
 public class SumFunction implements Function {
     @Override
-    public double execute(String[] arguments) {
+    public double execute(List<Double> arguments) {
         CalculatorImpl calculator = new CalculatorImpl();
         double sum = 0;
-        for (String argument : arguments
+        for (double argument : arguments
                 ) {
-            try {
-                sum += calculator.calculate(argument);
-            } catch (CalculationException e) {
-                e.printStackTrace();
-            }
+            sum += argument;
         }
         return sum;
     }

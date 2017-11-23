@@ -1,9 +1,7 @@
 package javaclasses.calculator.impl;
 
-
-
-import java.util.ArrayList;
+import java.util.List;
 
 public interface Function {
-    double execute(String[] arguments);
+    double execute(List<Double> arguments);
 }

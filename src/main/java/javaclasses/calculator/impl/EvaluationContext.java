@@ -26,7 +26,6 @@ public class EvaluationContext {
     }
 
     /**
-     *
      * @return the result of all calculating.
      */
     public double getResult() {
@@ -37,9 +36,6 @@ public class EvaluationContext {
         return operandStack.pop();
     }
 
-    public void putFunctionToContext(String functionName){
-        functions.push(new FunctionEvaluationContext(functionName));
-    }
 
     /**
      * Make a calculating between stacks of operators and operands.
@@ -55,7 +51,6 @@ public class EvaluationContext {
 
     /**
      * Push the binary operator to the stack of operators.
-     * @param operator
      */
     public void pushBinaryOperator(BinaryOperator operator) {
         while (!operatorStack.peek().isEmpty() && operator.compareTo(operatorStack.peek().peek()) != 1) {
@@ -75,9 +70,30 @@ public class EvaluationContext {
      * Calculating all expressions inside the brackets if it is the end.
      */
     public void pushClosingBracket() {
+        calculateTopExpression();
+
+        if ( functions.isEmpty() || functions.peek().getFunctionPositions().peek() <operatorStack.size()){
+            operatorStack.pop();
+        } else{
+            pushDelimiter(); // Function closing bracket it is the last delimiter.
+            double funcExecutingResult = functions.pop().executeFunction();
+            operandStack.push(funcExecutingResult);
+        }
+    }
+
+    public void pushFunctionToContext(String functionName) {
+        functions.push(new FunctionEvaluationContext(functionName, operatorStack.size() + 1));
+    }
+
+    public void pushDelimiter() {
+        calculateTopExpression();
+        double functionArgument = operandStack.pop();
+        functions.peek().getFunctionArguments().peek().add(functionArgument);
+    }
+
+    private void calculateTopExpression() {
         while (!operatorStack.peek().isEmpty()) {
             popTopOperator();
         }
-        operatorStack.pop();
     }
 }

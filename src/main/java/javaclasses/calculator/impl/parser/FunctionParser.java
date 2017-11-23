@@ -21,7 +21,7 @@ public class FunctionParser implements ExpressionParser {
 
         for (String name : factory.getFunctionsName()) {
             if (expression.startsWith(name)) {
-                context.putFunctionToContext(name);
+                context.pushFunctionToContext(name);
                 reader.incrementParsePosition(name.length());
                 return true;
             }

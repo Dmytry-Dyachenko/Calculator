@@ -16,7 +16,7 @@ public class DelimiterParser implements ExpressionParser {
     public boolean parse(ExpressionReader reader, EvaluationContext context) {
         final String expression = reader.getRemainingExpression();
         if (expression.startsWith(DELIMITER)) {
-            context.pushOpeningBracket();
+            context.pushDelimiter();
             reader.incrementParsePosition(DELIMITER.length());
             return true;
         }
