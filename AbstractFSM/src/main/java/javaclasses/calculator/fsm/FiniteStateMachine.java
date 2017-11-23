@@ -46,7 +46,7 @@ public abstract class FiniteStateMachine<
      * @param currentState
      * @return the possibility of moveForward.
      */
-    private Optional<State> moveForward(Input input, Output output, State currentState) {
+    private Optional<State> moveForward(Input input, Output output, State currentState) throws TransitionError{
 
         final Set<State> transitions = getPossibleTransitions(currentState);
 
@@ -67,7 +67,7 @@ public abstract class FiniteStateMachine<
         return Optional.empty();
     }
 
-    protected abstract boolean acceptState(Input input, Output output, State nextState);
+    protected abstract boolean acceptState(Input input, Output output, State nextState) throws TransitionError;
 
     protected abstract boolean isFinishState(State currentState);
 

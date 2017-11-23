@@ -23,6 +23,9 @@ public class CalculatorImpl
         CalculationException>
         implements Calculator {
 
+    public CalculatorImpl() {
+    }
+
     private final ParserFactory parserFactory = new ParserFactory();
 
     private final Map<State, Set<State>> transitions = new HashMap<State, Set<State>>() {{
@@ -44,12 +47,13 @@ public class CalculatorImpl
 
     @Override
     protected boolean acceptState(ExpressionReader reader,
-                                  EvaluationContext context, State nextState) {
+                                  EvaluationContext context, State nextState) throws CalculationException  {
         final ExpressionParser parser = parserFactory.getParser(nextState);
+
         try {
             return parser.parse(reader, context);
-        } catch (CalculationException e) {
-            e.getErrorPosition();
+        } catch (CalculationException calculationException) {
+            raiseDeadlockError(nextState,reader);
             return false;
         }
     }

@@ -1,5 +1,7 @@
 package javaclasses.calculator.impl;
 
+import javaclasses.calculator.CalculationException;
+
 import java.util.ArrayDeque;
 import java.util.Deque;
 
@@ -28,7 +30,7 @@ public class EvaluationContext {
     /**
      * @return the result of all calculating.
      */
-    public double getResult() {
+    public double getResult() throws CalculationException {
 
         while (!operatorStack.peek().isEmpty()) {
             popTopOperator();
@@ -40,7 +42,7 @@ public class EvaluationContext {
     /**
      * Make a calculating between stacks of operators and operands.
      */
-    private void popTopOperator() {
+    private void popTopOperator() throws CalculationException {
 
         final BinaryOperator operator = operatorStack.peek().pop();
         final Double rightOperand = operandStack.pop();
@@ -52,7 +54,7 @@ public class EvaluationContext {
     /**
      * Push the binary operator to the stack of operators.
      */
-    public void pushBinaryOperator(BinaryOperator operator) {
+    public void pushBinaryOperator(BinaryOperator operator) throws CalculationException {
         while (!operatorStack.peek().isEmpty() && operator.compareTo(operatorStack.peek().peek()) < 1) {
             popTopOperator();
         }
@@ -69,7 +71,7 @@ public class EvaluationContext {
     /**
      * Calculating all expressions inside the brackets if it is the end.
      */
-    public void pushClosingBracket() {
+    public void pushClosingBracket() throws CalculationException {
         calculateTopExpression();
 
         if (functions.isEmpty() || functions.peek().getFunctionPositions().peek() < operatorStack.size()) {
@@ -86,13 +88,13 @@ public class EvaluationContext {
         functions.push(new FunctionEvaluationContext(functionName, operatorStack.size()));
     }
 
-    public void pushDelimiter() {
+    public void pushDelimiter() throws CalculationException {
         calculateTopExpression();
         final double functionArgument = operandStack.pop();
         functions.peek().getFunctionArguments().peek().add(functionArgument);
     }
 
-    private void calculateTopExpression() {
+    private void calculateTopExpression() throws CalculationException {
         while (!operatorStack.peek().isEmpty()) {
             popTopOperator();
         }

@@ -42,5 +42,17 @@ public class FunctionalTest {
         assertEquals(61, result, 0.001);
     }
 
+    @Test
+    public void testStringWithBracketsAndFunctions() throws CalculationException {
+        final double result = calculator.calculate("sum(5,3+2*(2+3^(1+2)),1)");
+        assertEquals(67, result, 0.001);
+    }
+
+    @Test
+    public void testFunctionsAndBinaryOperationsInteraction() throws CalculationException {
+        final double result = calculator.calculate("min(2,192,11)^aver(5,1)*sum(1,2,3)");
+        assertEquals(48, result, 0.001);
+    }
+
 
 }
