@@ -12,6 +12,9 @@ import java.util.Set;
 import static java.util.EnumSet.of;
 import static javaclasses.calculator.impl.State.*;
 
+/**
+ * Finite state machine logic implemented as calculator.
+ */
 public class CalculatorImpl
         extends FiniteStateMachine<
         ExpressionReader,
@@ -23,11 +26,13 @@ public class CalculatorImpl
     private final ParserFactory parserFactory = new ParserFactory();
 
     private final Map<State, Set<State>> transitions = new HashMap<State, Set<State>>() {{
-        put(START, of(NUMBER, OPEN_BRACKET));
-        put(NUMBER, of(BINARY_OPERATOR, CLOSE_BRACKET, FINISH));
-        put(BINARY_OPERATOR, of(NUMBER, OPEN_BRACKET));
-        put(OPEN_BRACKET, of(NUMBER, OPEN_BRACKET));
-        put(CLOSE_BRACKET, of(CLOSE_BRACKET, BINARY_OPERATOR, FINISH));
+        put(START, of(NUMBER, OPEN_BRACKET, FUNCTION));
+        put(NUMBER, of(DELIMETER, BINARY_OPERATOR, CLOSE_BRACKET, FINISH));
+        put(BINARY_OPERATOR, of(NUMBER, OPEN_BRACKET, FUNCTION));
+        put(OPEN_BRACKET, of(NUMBER, OPEN_BRACKET, FUNCTION));
+        put(FUNCTION, of(OPEN_BRACKET, BINARY_OPERATOR, CLOSE_BRACKET));
+        put(DELIMETER, of(OPEN_BRACKET, NUMBER));
+        put(CLOSE_BRACKET, of(DELIMETER, CLOSE_BRACKET, BINARY_OPERATOR, FINISH));
     }};
 
     @Override
@@ -40,9 +45,13 @@ public class CalculatorImpl
     @Override
     protected boolean acceptState(ExpressionReader reader,
                                   EvaluationContext context, State nextState) {
-
         final ExpressionParser parser = parserFactory.getParser(nextState);
-        return parser.parse(reader, context);
+        try {
+            return parser.parse(reader, context);
+        } catch (CalculationException e) {
+            e.getErrorPosition();
+            return false;
+        }
     }
 
     @Override

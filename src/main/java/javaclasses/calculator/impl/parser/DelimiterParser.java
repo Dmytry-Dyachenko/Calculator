@@ -3,21 +3,24 @@ package javaclasses.calculator.impl.parser;
 import javaclasses.calculator.impl.EvaluationContext;
 import javaclasses.calculator.impl.ExpressionParser;
 import javaclasses.calculator.impl.ExpressionReader;
+import javaclasses.calculator.impl.operator.BinaryOperatorFactory;
 
 /**
- * Checking for "closeBracket" state.
+ * Checking for "delimiter" state.
  */
-public class CloseBracketParser implements ExpressionParser {
+public class DelimiterParser implements ExpressionParser {
 
-    private final String CLOSE_BRACKET = ")";
+    final private String DELIMITER = ",";
+
     @Override
     public boolean parse(ExpressionReader reader, EvaluationContext context) {
         final String expression = reader.getRemainingExpression();
-        if (expression.startsWith(CLOSE_BRACKET)) {
-            context.pushClosingBracket();
-            reader.incrementParsePosition(CLOSE_BRACKET.length());
+        if (expression.startsWith(DELIMITER)) {
+            context.pushOpeningBracket();
+            reader.incrementParsePosition(DELIMITER.length());
             return true;
         }
         return false;
     }
 }
+

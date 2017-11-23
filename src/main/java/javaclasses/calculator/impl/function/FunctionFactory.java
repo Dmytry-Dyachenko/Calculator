@@ -1,19 +1,21 @@
 package javaclasses.calculator.impl.function;
 
-import javaclasses.calculator.impl.ExpressionParser;
+
 import javaclasses.calculator.impl.Function;
-import javaclasses.calculator.impl.State;
-import javaclasses.calculator.impl.parser.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
-import static javaclasses.calculator.impl.State.*;
+/**
+ * Router connecting function and their executing.
+ */
+
 
 public class FunctionFactory {
 
     private final Map<String, Function> functions = new HashMap<String, Function>() {{
-        put("sum", new SumFunction());
+        put("sum(", new SumFunction());
     }};
 
     public Function getFunction(String name) {
@@ -23,5 +25,9 @@ public class FunctionFactory {
         }
 
         return functions.get(name);
+    }
+
+    public Set<String> getFunctionsName() {
+        return functions.keySet();
     }
 }

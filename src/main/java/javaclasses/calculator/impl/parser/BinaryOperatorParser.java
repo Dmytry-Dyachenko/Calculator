@@ -5,6 +5,9 @@ import javaclasses.calculator.impl.ExpressionParser;
 import javaclasses.calculator.impl.ExpressionReader;
 import javaclasses.calculator.impl.operator.BinaryOperatorFactory;
 
+/**
+ * Checking for "binaryOperation" state.
+ */
 public class BinaryOperatorParser implements ExpressionParser {
 
     private final BinaryOperatorFactory factory = new BinaryOperatorFactory();

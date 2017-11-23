@@ -1,5 +1,7 @@
 package javaclasses.calculator.impl.operator;
-
+/**
+ * Implementation the add.
+ */
 public class PlusOperator extends AbstractBinaryOperator {
 
     public PlusOperator(Priority priority) {

@@ -1,6 +1,8 @@
 package javaclasses.calculator.impl.operator;
 
-import javaclasses.calculator.CalculationException;
+/**
+ * Implementation the division.
+ */
 
 public class DivisionOperator extends AbstractBinaryOperator {
 

@@ -7,6 +7,9 @@ import javaclasses.calculator.impl.ExpressionReader;
 import java.text.DecimalFormat;
 import java.text.ParsePosition;
 
+/**
+ * Checking of "number" state.
+ */
 public class NumberParser implements ExpressionParser {
 
     @Override

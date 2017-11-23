@@ -4,6 +4,9 @@ import javaclasses.calculator.impl.EvaluationContext;
 import javaclasses.calculator.impl.ExpressionParser;
 import javaclasses.calculator.impl.ExpressionReader;
 
+/**
+ * Checking for "finish" state.
+ */
 public class EndOfExpressionParser implements ExpressionParser {
 
     @Override

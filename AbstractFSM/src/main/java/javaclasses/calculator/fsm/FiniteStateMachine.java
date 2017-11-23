@@ -14,6 +14,13 @@ public abstract class FiniteStateMachine<
 
     public final static Logger LOG = Logger.getLogger(FiniteStateMachine.class.getName());
 
+    /**
+     * Realization of finite state machine.
+     * @param startState the begin state of machine.
+     * @param input input machine language.
+     * @param output the result of machine work.
+     * @throws TransitionError error occur with the illegal states for our language.
+     */
     public void start(State startState, Input input, Output output) throws TransitionError {
 
         State currentState = startState;
@@ -34,6 +41,11 @@ public abstract class FiniteStateMachine<
         }
     }
 
+    /**
+     * Check the existing of next possible states.
+     * @param currentState
+     * @return the possibility of moveForward.
+     */
     private Optional<State> moveForward(Input input, Output output, State currentState) {
 
         final Set<State> transitions = getPossibleTransitions(currentState);

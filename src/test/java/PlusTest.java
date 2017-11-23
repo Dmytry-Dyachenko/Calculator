@@ -21,9 +21,13 @@ public class PlusTest {
     }
 
     @Test
-    public void testMultiPlusOperator() throws CalculationException {
+    public void testMultiPlusOperatorWithFloats() throws CalculationException {
         final double result = calculator.calculate("1+2.4+1.22+2.02");
         assertEquals(6.64, result, 0.001);
+    }
+    @Test(expected = CalculationException.class)
+    public void testDoubleOperatorError() throws CalculationException {
+        final double result = calculator.calculate("1++2");
     }
 
 }

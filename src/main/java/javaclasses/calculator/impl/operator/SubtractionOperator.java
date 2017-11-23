@@ -1,5 +1,8 @@
 package javaclasses.calculator.impl.operator;
 
+/**
+ * Implementation the subtract.
+ */
 public class SubtractionOperator extends AbstractBinaryOperator {
 
     public SubtractionOperator(Priority priority) {

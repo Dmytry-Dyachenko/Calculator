@@ -1,5 +1,7 @@
 package javaclasses.calculator.impl.operator;
-
+/**
+ * Implementation the multiple.
+ */
 public class MultiplicationOperator extends AbstractBinaryOperator {
 
     public MultiplicationOperator(Priority priority) {
