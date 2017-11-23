@@ -5,7 +5,7 @@ package javaclasses.calculator.impl.operator;
  */
 public class ExponentiationOperator extends AbstractBinaryOperator {
 
-    public ExponentiationOperator(Priority priority) {
+    ExponentiationOperator(Priority priority) {
         super(priority);
     }
 

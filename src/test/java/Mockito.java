@@ -32,5 +32,12 @@ public class Mockito {
         when(test.parse(reader, context)).thenReturn(true);
     }
 
+    @Test
+    public void testPlusBinaryOperator() throws CalculationException {
+        final ExpressionReader reader = new ExpressionReader("+");
+        BinaryOperatorParser test = mock(BinaryOperatorParser.class);
+        when(test.parse(reader, context)).thenReturn(true);
+    }
+
 
 }

@@ -26,7 +26,7 @@ public class ParserFactory {
     /**
      * Dependence of state
      *
-     * @param state
+     * @param state conditional for our next logic step.
      * @return state executor.
      */
     public ExpressionParser getParser(State state) {

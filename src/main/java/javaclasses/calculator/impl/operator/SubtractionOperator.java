@@ -5,7 +5,7 @@ package javaclasses.calculator.impl.operator;
  */
 public class SubtractionOperator extends AbstractBinaryOperator {
 
-    public SubtractionOperator(Priority priority) {
+    SubtractionOperator(Priority priority) {
         super(priority);
     }
 

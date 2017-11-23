@@ -1,8 +1,6 @@
 package javaclasses.calculator.impl.function;
 
 import javaclasses.calculator.impl.Function;
-
-import java.util.Collections;
 import java.util.List;
 
 /**

@@ -6,7 +6,7 @@ package javaclasses.calculator.impl.operator;
 
 public class DivisionOperator extends AbstractBinaryOperator {
 
-    public DivisionOperator(Priority priority) {
+    DivisionOperator(Priority priority) {
         super(priority);
     }
 

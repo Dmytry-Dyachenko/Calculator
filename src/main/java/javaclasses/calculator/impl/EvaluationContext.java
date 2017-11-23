@@ -21,7 +21,7 @@ public class EvaluationContext {
     /**
      * Push the number to operands stack.
      *
-     * @param value
+     * @param value is a number.
      */
     public void pushNumber(double value) {
         operandStack.push(value);

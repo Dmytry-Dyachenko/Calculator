@@ -21,7 +21,7 @@ public class ExpressionReader {
         return parsePosition >= expression.length();
     }
 
-    public int getParsePosition() {
+    int getParsePosition() {
         return parsePosition;
     }
 

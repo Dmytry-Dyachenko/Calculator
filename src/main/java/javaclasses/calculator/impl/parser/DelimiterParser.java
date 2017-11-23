@@ -4,7 +4,6 @@ import javaclasses.calculator.CalculationException;
 import javaclasses.calculator.impl.EvaluationContext;
 import javaclasses.calculator.impl.ExpressionParser;
 import javaclasses.calculator.impl.ExpressionReader;
-import javaclasses.calculator.impl.operator.BinaryOperatorFactory;
 
 /**
  * Checking for "delimiter" state.

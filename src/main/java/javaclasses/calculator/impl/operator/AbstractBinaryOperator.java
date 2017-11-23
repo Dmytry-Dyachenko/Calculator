@@ -12,7 +12,7 @@ public abstract class AbstractBinaryOperator implements BinaryOperator {
 
     private final Priority priority;
 
-    public AbstractBinaryOperator(Priority priority) {
+    AbstractBinaryOperator(Priority priority) {
         this.priority = priority;
     }
 

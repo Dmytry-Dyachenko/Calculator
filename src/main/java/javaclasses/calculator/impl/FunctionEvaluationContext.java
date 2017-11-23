@@ -13,6 +13,7 @@ import java.util.List;
  */
 
 class FunctionEvaluationContext {
+
     private Deque<String> functionsName = new ArrayDeque<>();
     private Deque<List<Double>> functionArguments = new ArrayDeque<>();
     private Deque<Integer> functionPositions = new ArrayDeque<>();

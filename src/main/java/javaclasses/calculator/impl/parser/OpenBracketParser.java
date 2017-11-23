@@ -11,7 +11,9 @@ public class OpenBracketParser implements ExpressionParser {
 
     @Override
     public boolean parse(ExpressionReader reader, EvaluationContext context) {
+
         final String OPEN_BRACKET = "(";
+
         final String expression = reader.getRemainingExpression();
         if (expression.startsWith(OPEN_BRACKET)) {
             context.pushOpeningBracket();
