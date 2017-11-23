@@ -13,6 +13,7 @@ public class CalculationException extends Exception {
         this.errorPosition = errorPosition;
     }
 
+
     public int getErrorPosition() {
         return errorPosition;
     }

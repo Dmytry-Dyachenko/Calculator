@@ -12,7 +12,7 @@ import javaclasses.calculator.impl.function.FunctionFactory;
 
 public class FunctionParser implements ExpressionParser {
 
-    final FunctionFactory factory = new FunctionFactory();
+    private final FunctionFactory factory = new FunctionFactory();
 
     @Override
     public boolean parse(ExpressionReader reader, EvaluationContext context) {

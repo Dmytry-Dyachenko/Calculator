@@ -16,6 +16,9 @@ public class FunctionFactory {
 
     private final Map<String, Function> functions = new HashMap<String, Function>() {{
         put("sum", new SumFunction());
+        put("min", new MinFunction());
+        put("max", new MaxFunction());
+        put("aver", new AverageFunction());
     }};
 
     public Function getFunction(String name) {

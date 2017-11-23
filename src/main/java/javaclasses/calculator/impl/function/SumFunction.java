@@ -4,7 +4,6 @@ package javaclasses.calculator.impl.function;
 import javaclasses.calculator.impl.CalculatorImpl;
 import javaclasses.calculator.impl.Function;
 
-import java.util.Deque;
 import java.util.List;
 
 /**

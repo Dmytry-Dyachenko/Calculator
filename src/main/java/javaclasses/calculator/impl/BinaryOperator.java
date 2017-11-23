@@ -1,6 +1,6 @@
 package javaclasses.calculator.impl;
 
-public interface BinaryOperator<Op extends BinaryOperator> extends Comparable<Op> {
+public interface BinaryOperator extends Comparable<BinaryOperator> {
 
     double evaluate(double leftOperand, double rightOperand);
 }

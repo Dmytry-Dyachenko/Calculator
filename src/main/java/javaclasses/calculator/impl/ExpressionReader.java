@@ -14,6 +14,7 @@ public class ExpressionReader {
 
     /**
      * Check our current position and
+     *
      * @return true if we reached the end.
      */
     public boolean endOfExpression() {

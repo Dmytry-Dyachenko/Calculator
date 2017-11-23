@@ -53,7 +53,7 @@ public class EvaluationContext {
      * Push the binary operator to the stack of operators.
      */
     public void pushBinaryOperator(BinaryOperator operator) {
-        while (!operatorStack.peek().isEmpty() && operator.compareTo(operatorStack.peek().peek()) != 1) {
+        while (!operatorStack.peek().isEmpty() && operator.compareTo(operatorStack.peek().peek()) < 1) {
             popTopOperator();
         }
         operatorStack.peek().push(operator);
@@ -72,22 +72,23 @@ public class EvaluationContext {
     public void pushClosingBracket() {
         calculateTopExpression();
 
-        if ( functions.isEmpty() || functions.peek().getFunctionPositions().peek() <operatorStack.size()){
+        if (functions.isEmpty() || functions.peek().getFunctionPositions().peek() < operatorStack.size()) {
             operatorStack.pop();
-        } else{
+        } else {
             pushDelimiter(); // Function closing bracket it is the last delimiter.
-            double funcExecutingResult = functions.pop().executeFunction();
+            final double funcExecutingResult = functions.pop().executeFunction();
             operandStack.push(funcExecutingResult);
+            operatorStack.pop();
         }
     }
 
     public void pushFunctionToContext(String functionName) {
-        functions.push(new FunctionEvaluationContext(functionName, operatorStack.size() + 1));
+        functions.push(new FunctionEvaluationContext(functionName, operatorStack.size()));
     }
 
     public void pushDelimiter() {
         calculateTopExpression();
-        double functionArgument = operandStack.pop();
+        final double functionArgument = operandStack.pop();
         functions.peek().getFunctionArguments().peek().add(functionArgument);
     }
 

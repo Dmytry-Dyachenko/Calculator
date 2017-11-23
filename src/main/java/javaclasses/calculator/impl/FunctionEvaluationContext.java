@@ -8,27 +8,31 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 
+/**
+ * There place will be used for name and arguments holding.
+ */
 
-public class FunctionEvaluationContext {
+class FunctionEvaluationContext {
     private Deque<String> functionsName = new ArrayDeque<>();
     private Deque<List<Double>> functionArguments = new ArrayDeque<>();
     private Deque<Integer> functionPositions = new ArrayDeque<>();
 
-    FunctionEvaluationContext(String functionName, int functionPosition){
+    FunctionEvaluationContext(String functionName, int functionPosition) {
         this.functionsName.push(functionName);
         this.functionArguments.push(new ArrayList<>());
-        this.functionPositions.push(functionPosition);
+        //todo: find another way to say to function, that we create another stack especially for it.
+        this.functionPositions.push(functionPosition + 1);
     }
 
-    public Deque<List<Double>> getFunctionArguments() {
+    Deque<List<Double>> getFunctionArguments() {
         return functionArguments;
     }
 
-    public Deque<Integer> getFunctionPositions() {
+    Deque<Integer> getFunctionPositions() {
         return functionPositions;
     }
 
-    public double executeFunction() {
+    double executeFunction() {
         final FunctionFactory factory = new FunctionFactory();
         return factory.getFunction(functionsName.pop()).execute(functionArguments.pop());
     }

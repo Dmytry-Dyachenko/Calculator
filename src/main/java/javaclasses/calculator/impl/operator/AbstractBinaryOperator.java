@@ -2,7 +2,7 @@ package javaclasses.calculator.impl.operator;
 
 import javaclasses.calculator.impl.BinaryOperator;
 
-public abstract class AbstractBinaryOperator implements BinaryOperator<AbstractBinaryOperator> {
+public abstract class AbstractBinaryOperator implements BinaryOperator {
 
     enum Priority {
         LOW,
@@ -17,7 +17,7 @@ public abstract class AbstractBinaryOperator implements BinaryOperator<AbstractB
     }
 
     @Override
-    public int compareTo(AbstractBinaryOperator o) {
-        return this.priority.ordinal() > o.priority.ordinal() ? 1 : 0;
+    public int compareTo(BinaryOperator o) {
+        return this.priority.compareTo(((AbstractBinaryOperator) o).priority);
     }
 }

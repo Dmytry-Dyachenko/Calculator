@@ -9,6 +9,7 @@ import java.util.Set;
 import static javaclasses.calculator.impl.operator.AbstractBinaryOperator.Priority.HIGH;
 import static javaclasses.calculator.impl.operator.AbstractBinaryOperator.Priority.LOW;
 import static javaclasses.calculator.impl.operator.AbstractBinaryOperator.Priority.MEDIUM;
+
 /**
  * Router connecting sing and their executing.
  */

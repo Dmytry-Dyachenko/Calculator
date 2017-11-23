@@ -10,10 +10,9 @@ import javaclasses.calculator.impl.operator.BinaryOperatorFactory;
  */
 public class DelimiterParser implements ExpressionParser {
 
-    final private String DELIMITER = ",";
-
     @Override
     public boolean parse(ExpressionReader reader, EvaluationContext context) {
+        final String DELIMITER = ",";
         final String expression = reader.getRemainingExpression();
         if (expression.startsWith(DELIMITER)) {
             context.pushDelimiter();
