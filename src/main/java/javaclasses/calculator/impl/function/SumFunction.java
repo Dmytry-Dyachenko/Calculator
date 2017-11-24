@@ -19,4 +19,14 @@ public class SumFunction implements Function {
         }
         return sum;
     }
+
+    @Override
+    public int getMinCountOfArguments() {
+        return 2;
+    }
+
+    @Override
+    public int getMaxCountOfArguments() {
+        return 100;
+    }
 }

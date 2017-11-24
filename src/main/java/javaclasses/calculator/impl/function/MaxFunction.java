@@ -14,4 +14,14 @@ public class MaxFunction implements Function {
     public double execute(List<Double> arguments) {
         return Collections.max(arguments);
     }
+
+    @Override
+    public int getMinCountOfArguments() {
+        return 2;
+    }
+
+    @Override
+    public int getMaxCountOfArguments() {
+        return 100;
+    }
 }

@@ -9,19 +9,19 @@ import java.util.List;
  * Implementation of the min function.
  */
 
-public class MinFunction implements Function {
+public class PiFunction implements Function {
     @Override
     public double execute(List<Double> arguments) {
-        return Collections.min(arguments);
+        return Math.PI;
     }
 
     @Override
     public int getMinCountOfArguments() {
-        return 2;
+        return 0;
     }
 
     @Override
     public int getMaxCountOfArguments() {
-        return 100;
+        return 0;
     }
 }

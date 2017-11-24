@@ -80,7 +80,7 @@ public class EvaluationContext {
             operatorStack.pop();
         } else {
             pushDelimiter(); // Function closing bracket it is the last delimiter.
-            final double funcExecutingResult = functions.pop().executeFunction();
+            final double funcExecutingResult = functions.pop().executeFunction(handler);
             operandStack.push(funcExecutingResult);
             operatorStack.pop();
         }

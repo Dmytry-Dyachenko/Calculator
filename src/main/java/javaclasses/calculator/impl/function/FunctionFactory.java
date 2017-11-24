@@ -19,6 +19,7 @@ public class FunctionFactory {
         put("min", new MinFunction());
         put("max", new MaxFunction());
         put("aver", new AverageFunction());
+        put("pi", new PiFunction());
     }};
 
     public Function getFunction(String name) {

@@ -30,7 +30,7 @@ public class CalculatorImpl
         put(START, of(NUMBER, OPEN_BRACKET, FUNCTION));
         put(NUMBER, of(DELIMETER, BINARY_OPERATOR, CLOSE_BRACKET, FINISH));
         put(BINARY_OPERATOR, of(NUMBER, OPEN_BRACKET, FUNCTION));
-        put(OPEN_BRACKET, of(NUMBER, OPEN_BRACKET, FUNCTION));
+        put(OPEN_BRACKET, of(CLOSE_BRACKET, NUMBER, OPEN_BRACKET, FUNCTION));
         put(FUNCTION, of(OPEN_BRACKET, BINARY_OPERATOR, CLOSE_BRACKET));
         put(DELIMETER, of(OPEN_BRACKET, NUMBER));
         put(CLOSE_BRACKET, of(DELIMETER, CLOSE_BRACKET, BINARY_OPERATOR, FINISH));
@@ -42,11 +42,11 @@ public class CalculatorImpl
         final EvaluationContext evaluationContext = new EvaluationContext(new ErrorHandler() {
             @Override
             public void raiseError(String message) throws CalculationException {
-                throw new CalculationException(message +"at position " + reader.getParsePosition()+"!");
+                throw new CalculationException(message + "at position " + reader.getParsePosition() + "!");
             }
         });
-            start(START, reader, evaluationContext);
-            return evaluationContext.getResult();
+        start(START, reader, evaluationContext);
+        return evaluationContext.getResult();
     }
 
     @Override
@@ -70,7 +70,7 @@ public class CalculatorImpl
     protected void raiseDeadlockError(State state, ExpressionReader reader)
             throws CalculationException {
 
-        throw new CalculationException("Incorrect expression format at position "+reader.getParsePosition()+"!");
+        throw new CalculationException("Incorrect expression format at position " + reader.getParsePosition() + "!");
 
     }
 }

@@ -1,6 +1,8 @@
 package javaclasses.calculator.impl;
 
 
+import javaclasses.calculator.CalculationException;
+import javaclasses.calculator.ErrorHandler;
 import javaclasses.calculator.impl.function.FunctionFactory;
 
 import java.util.ArrayDeque;
@@ -18,10 +20,12 @@ class FunctionEvaluationContext {
     private Deque<List<Double>> functionArguments = new ArrayDeque<>();
     private Deque<Integer> functionPositions = new ArrayDeque<>();
 
+    private final FunctionFactory factory = new FunctionFactory();
+
+
     FunctionEvaluationContext(String functionName, int functionPosition) {
         this.functionsName.push(functionName);
         this.functionArguments.push(new ArrayList<>());
-        //todo: find another way to say to function, that we create another stack especially for it.
         this.functionPositions.push(functionPosition + 1);
     }
 
@@ -33,8 +37,17 @@ class FunctionEvaluationContext {
         return functionPositions;
     }
 
-    double executeFunction() {
-        final FunctionFactory factory = new FunctionFactory();
+    double executeFunction(ErrorHandler handler) throws CalculationException {
+        isPossibleQuantityOfArguments(handler);
         return factory.getFunction(functionsName.pop()).execute(functionArguments.pop());
+    }
+
+    private void isPossibleQuantityOfArguments(ErrorHandler handler) throws CalculationException {
+        int minCount = factory.getFunction(functionsName.peek()).getMinCountOfArguments();
+        int maxCount = factory.getFunction(functionsName.peek()).getMaxCountOfArguments();
+        int currentCount = functionArguments.peek().size();
+        if (currentCount < minCount || currentCount > maxCount) {
+            handler.raiseError("Illegal quantity of function arguments ");
+        }
     }
 }
