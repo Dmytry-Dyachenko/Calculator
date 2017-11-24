@@ -1,6 +1,8 @@
 package javaclasses.calculator.impl;
 
 import javaclasses.calculator.CalculationException;
+import javaclasses.calculator.ErrorHandler;
+
 import java.util.ArrayDeque;
 import java.util.Deque;
 
@@ -13,9 +15,11 @@ public class EvaluationContext {
     private final Deque<Deque<BinaryOperator>> operatorStack = new ArrayDeque<>();
     private final Deque<FunctionEvaluationContext> functions = new ArrayDeque<>();
 
+    private ErrorHandler handler;
 
-    public EvaluationContext() {
+    public EvaluationContext(ErrorHandler handler) {
         this.operatorStack.push(new ArrayDeque<>());
+        this.handler = handler;
     }
 
     /**
@@ -37,7 +41,6 @@ public class EvaluationContext {
         }
         return operandStack.pop();
     }
-
 
     /**
      * Make a calculating between stacks of operators and operands.
@@ -73,7 +76,6 @@ public class EvaluationContext {
      */
     public void pushClosingBracket() throws CalculationException {
         calculateTopExpression();
-
         if (functions.isEmpty() || functions.peek().getFunctionPositions().peek() < operatorStack.size()) {
             operatorStack.pop();
         } else {

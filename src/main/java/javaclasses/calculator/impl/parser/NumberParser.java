@@ -1,5 +1,6 @@
 package javaclasses.calculator.impl.parser;
 
+import javaclasses.calculator.CalculationException;
 import javaclasses.calculator.impl.EvaluationContext;
 import javaclasses.calculator.impl.ExpressionParser;
 import javaclasses.calculator.impl.ExpressionReader;
@@ -13,7 +14,7 @@ import java.text.ParsePosition;
 public class NumberParser implements ExpressionParser {
 
     @Override
-    public boolean parse(ExpressionReader reader, EvaluationContext context) {
+    public boolean parse(ExpressionReader reader, EvaluationContext context) throws CalculationException {
 
 
         final DecimalFormat format = new DecimalFormat("0.0");

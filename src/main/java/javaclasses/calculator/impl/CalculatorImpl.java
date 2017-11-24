@@ -38,22 +38,22 @@ public class CalculatorImpl
 
     @Override
     public double calculate(String expression) throws CalculationException {
-        final EvaluationContext evaluationContext = new EvaluationContext();
-        start(START, new ExpressionReader(expression), evaluationContext);
-        return evaluationContext.getResult();
+        ExpressionReader reader = new ExpressionReader(expression);
+        final EvaluationContext evaluationContext = new EvaluationContext(new ErrorHandler() {
+            @Override
+            public void raiseError(String message) throws CalculationException {
+                throw new CalculationException(message +"at position " + reader.getParsePosition()+"!");
+            }
+        });
+            start(START, reader, evaluationContext);
+            return evaluationContext.getResult();
     }
 
     @Override
     protected boolean acceptState(ExpressionReader reader,
                                   EvaluationContext context, State nextState) throws CalculationException {
         final ExpressionParser parser = parserFactory.getParser(nextState);
-
-        try {
-            return parser.parse(reader, context);
-        } catch (CalculationException calculationException) {
-            raiseDeadlockError(nextState, reader);
-            return false;
-        }
+        return parser.parse(reader, context);
     }
 
     @Override
@@ -70,8 +70,7 @@ public class CalculatorImpl
     protected void raiseDeadlockError(State state, ExpressionReader reader)
             throws CalculationException {
 
-        throw new CalculationException("Incorrect expression format.",
-                reader.getParsePosition());
+        throw new CalculationException("Incorrect expression format at position "+reader.getParsePosition()+"!");
 
     }
 }
