@@ -18,6 +18,7 @@ public class FunctionTest {
         final double result = calculator.calculate("min(5,11,13,15,2)");
         assertEquals(2, result, 0.001);
     }
+
     @Test
     public void testMaxFunction() throws CalculationException {
         final double result = calculator.calculate("max(5,2,8,3,7,6)");
@@ -39,6 +40,6 @@ public class FunctionTest {
     @Test
     public void testPiFunction() throws CalculationException {
         final double result = calculator.calculate("1+2*3+pi()");
-        assertEquals(7+Math.PI, result, 0.001);
+        assertEquals(7 + Math.PI, result, 0.001);
     }
 }
