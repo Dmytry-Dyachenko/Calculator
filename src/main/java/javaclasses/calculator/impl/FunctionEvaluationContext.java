@@ -43,8 +43,10 @@ class FunctionEvaluationContext {
         int minCount = function.getMinCountOfArguments();
         int maxCount = function.getMaxCountOfArguments();
         int currentCount = functionArguments.size();
-        if (currentCount < minCount || currentCount > maxCount) {
-            handler.raiseError("Illegal quantity of function arguments ");
+        if (currentCount < minCount) {
+            handler.raiseError("Too less arguments ");
+        } else if (currentCount > maxCount) {
+            handler.raiseError("Too more arguments ");
         }
     }
 }

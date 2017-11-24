@@ -35,4 +35,10 @@ public class FunctionTest {
         final double result = calculator.calculate("min(aver(sum(11,1,1),2),10)");
         assertEquals(7.5, result, 0.001);
     }
+
+    @Test
+    public void testPiFunction() throws CalculationException {
+        final double result = calculator.calculate("1+2*3+pi()");
+        assertEquals(7+Math.PI, result, 0.001);
+    }
 }

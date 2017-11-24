@@ -70,7 +70,7 @@ public class EvaluationContext {
      */
     public void pushOpeningBracket() {
         operatorStack.push(new ArrayDeque<>());
-        if (functions.size() != operatorStack.size()) {
+        if (functions.size() != operatorStack.size()) {//If the number of nesting does not correspond to the number of functions, we add the default function.
             pushFunctionToContext("default");
         }
 
@@ -91,12 +91,14 @@ public class EvaluationContext {
     }
 
     public void pushDelimiter() throws CalculationException {
-        calculateTopExpression();
-        final double functionArgument = operandStack.pop();
-        functions.peek().getFunctionArguments().add(functionArgument);
+        if (operatorStack.size()<operandStack.size()) {
+            popAllOperators();
+            final double functionArgument = operandStack.pop();
+            functions.peek().getFunctionArguments().add(functionArgument);
+        }
     }
 
-    private void calculateTopExpression() throws CalculationException {
+    private void popAllOperators() throws CalculationException {
         while (!operatorStack.peek().isEmpty()) {
             popTopOperator();
         }
