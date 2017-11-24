@@ -9,7 +9,7 @@ public class ExpressionReader {
     private int parsePosition = 0;
 
     public ExpressionReader(String expression) {
-        this.expression = expression;
+        this.expression = expression.replaceAll(" ","");
     }
 
     /**

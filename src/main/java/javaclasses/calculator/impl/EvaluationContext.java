@@ -1,7 +1,6 @@
 package javaclasses.calculator.impl;
 
 import javaclasses.calculator.CalculationException;
-
 import java.util.ArrayDeque;
 import java.util.Deque;
 
@@ -13,6 +12,7 @@ public class EvaluationContext {
     private final Deque<Double> operandStack = new ArrayDeque<>();
     private final Deque<Deque<BinaryOperator>> operatorStack = new ArrayDeque<>();
     private final Deque<FunctionEvaluationContext> functions = new ArrayDeque<>();
+
 
     public EvaluationContext() {
         this.operatorStack.push(new ArrayDeque<>());

@@ -2,6 +2,7 @@ package javaclasses.calculator.impl;
 
 import javaclasses.calculator.CalculationException;
 import javaclasses.calculator.Calculator;
+import javaclasses.calculator.ErrorHandler;
 import javaclasses.calculator.fsm.FiniteStateMachine;
 import javaclasses.calculator.impl.parser.ParserFactory;
 
@@ -23,16 +24,13 @@ public class CalculatorImpl
         CalculationException>
         implements Calculator {
 
-    public CalculatorImpl() {
-    }
-
     private final ParserFactory parserFactory = new ParserFactory();
 
     private final Map<State, Set<State>> transitions = new HashMap<State, Set<State>>() {{
         put(START, of(NUMBER, OPEN_BRACKET, FUNCTION));
         put(NUMBER, of(DELIMETER, BINARY_OPERATOR, CLOSE_BRACKET, FINISH));
-        put(BINARY_OPERATOR, of(NUMBER, OPEN_BRACKET,FUNCTION));
-        put(OPEN_BRACKET, of(NUMBER, OPEN_BRACKET,FUNCTION));
+        put(BINARY_OPERATOR, of(NUMBER, OPEN_BRACKET, FUNCTION));
+        put(OPEN_BRACKET, of(NUMBER, OPEN_BRACKET, FUNCTION));
         put(FUNCTION, of(OPEN_BRACKET, BINARY_OPERATOR, CLOSE_BRACKET));
         put(DELIMETER, of(OPEN_BRACKET, NUMBER));
         put(CLOSE_BRACKET, of(DELIMETER, CLOSE_BRACKET, BINARY_OPERATOR, FINISH));
@@ -47,13 +45,13 @@ public class CalculatorImpl
 
     @Override
     protected boolean acceptState(ExpressionReader reader,
-                                  EvaluationContext context, State nextState) throws CalculationException  {
+                                  EvaluationContext context, State nextState) throws CalculationException {
         final ExpressionParser parser = parserFactory.getParser(nextState);
 
         try {
             return parser.parse(reader, context);
         } catch (CalculationException calculationException) {
-            raiseDeadlockError(nextState,reader);
+            raiseDeadlockError(nextState, reader);
             return false;
         }
     }

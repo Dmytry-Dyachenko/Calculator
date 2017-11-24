@@ -48,7 +48,11 @@ public class FunctionalTest {
         assertEquals(175, result, 0.001);
     }
 
-
+    @Test
+    public void testExpressionWithSpaces() throws CalculationException {
+        final double result = calculator.calculate("    1    +    2  +  sum     (     1 ,   3    )");
+        assertEquals(7, result, 0.001);
+    }
 
 
 }
