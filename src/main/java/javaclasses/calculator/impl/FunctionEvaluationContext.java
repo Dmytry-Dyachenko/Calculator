@@ -16,36 +16,33 @@ import java.util.List;
 
 class FunctionEvaluationContext {
 
-    private Deque<String> functionsName = new ArrayDeque<>();
-    private Deque<List<Double>> functionArguments = new ArrayDeque<>();
-    private Deque<Integer> functionPositions = new ArrayDeque<>();
+    private String functionName;
+    private List<Double> functionArguments = new ArrayList<>();
+    private final Function function;
+    private final ErrorHandler handler;
 
     private final FunctionFactory factory = new FunctionFactory();
 
 
-    FunctionEvaluationContext(String functionName, int functionPosition) {
-        this.functionsName.push(functionName);
-        this.functionArguments.push(new ArrayList<>());
-        this.functionPositions.push(functionPosition + 1);
+    FunctionEvaluationContext(String functionName, ErrorHandler handler) {
+        this.handler = handler;
+        this.function = factory.getFunction(functionName);
+        this.functionName = functionName;
     }
 
-    Deque<List<Double>> getFunctionArguments() {
+    List<Double> getFunctionArguments() {
         return functionArguments;
     }
 
-    Deque<Integer> getFunctionPositions() {
-        return functionPositions;
+    double executeFunction() throws CalculationException {
+        isPossibleQuantityOfArguments();
+        return factory.getFunction(functionName).execute(functionArguments);
     }
 
-    double executeFunction(ErrorHandler handler) throws CalculationException {
-        isPossibleQuantityOfArguments(handler);
-        return factory.getFunction(functionsName.pop()).execute(functionArguments.pop());
-    }
-
-    private void isPossibleQuantityOfArguments(ErrorHandler handler) throws CalculationException {
-        int minCount = factory.getFunction(functionsName.peek()).getMinCountOfArguments();
-        int maxCount = factory.getFunction(functionsName.peek()).getMaxCountOfArguments();
-        int currentCount = functionArguments.peek().size();
+    private void isPossibleQuantityOfArguments() throws CalculationException {
+        int minCount = function.getMinCountOfArguments();
+        int maxCount = function.getMaxCountOfArguments();
+        int currentCount = functionArguments.size();
         if (currentCount < minCount || currentCount > maxCount) {
             handler.raiseError("Illegal quantity of function arguments ");
         }

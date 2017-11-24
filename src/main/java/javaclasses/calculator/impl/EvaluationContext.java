@@ -18,6 +18,7 @@ public class EvaluationContext {
     private ErrorHandler handler;
 
     public EvaluationContext(ErrorHandler handler) {
+        this.functions.push(new FunctionEvaluationContext("default", handler));
         this.operatorStack.push(new ArrayDeque<>());
         this.handler = handler;
     }
@@ -35,7 +36,6 @@ public class EvaluationContext {
      * @return the result of all calculating.
      */
     public double getResult() throws CalculationException {
-
         while (!operatorStack.peek().isEmpty()) {
             popTopOperator();
         }
@@ -51,6 +51,7 @@ public class EvaluationContext {
         final Double rightOperand = operandStack.pop();
         final Double leftOperand = operandStack.pop();
         final double result = operator.evaluate(leftOperand, rightOperand);
+
         operandStack.push(result);
     }
 
@@ -69,31 +70,30 @@ public class EvaluationContext {
      */
     public void pushOpeningBracket() {
         operatorStack.push(new ArrayDeque<>());
+        if (functions.size() != operatorStack.size()) {
+            pushFunctionToContext("default");
+        }
+
     }
 
     /**
      * Calculating all expressions inside the brackets if it is the end.
      */
     public void pushClosingBracket() throws CalculationException {
-        calculateTopExpression();
-        if (functions.isEmpty() || functions.peek().getFunctionPositions().peek() < operatorStack.size()) {
-            operatorStack.pop();
-        } else {
-            pushDelimiter(); // Function closing bracket it is the last delimiter.
-            final double funcExecutingResult = functions.pop().executeFunction(handler);
-            operandStack.push(funcExecutingResult);
-            operatorStack.pop();
-        }
+        pushDelimiter(); // Function closing bracket it is the last delimiter.
+        final double funcExecutingResult = functions.pop().executeFunction();
+        operandStack.push(funcExecutingResult);
+        operatorStack.pop();
     }
 
     public void pushFunctionToContext(String functionName) {
-        functions.push(new FunctionEvaluationContext(functionName, operatorStack.size()));
+        functions.push(new FunctionEvaluationContext(functionName, handler));
     }
 
     public void pushDelimiter() throws CalculationException {
         calculateTopExpression();
         final double functionArgument = operandStack.pop();
-        functions.peek().getFunctionArguments().peek().add(functionArgument);
+        functions.peek().getFunctionArguments().add(functionArgument);
     }
 
     private void calculateTopExpression() throws CalculationException {
