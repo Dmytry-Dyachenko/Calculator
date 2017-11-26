@@ -2,7 +2,6 @@ package javaclasses.calculator.impl;
 
 import javaclasses.calculator.CalculationException;
 import javaclasses.calculator.Calculator;
-import javaclasses.calculator.ErrorHandler;
 import javaclasses.calculator.fsm.FiniteStateMachine;
 import javaclasses.calculator.impl.parser.ParserFactory;
 
@@ -42,7 +41,7 @@ public class CalculatorImpl
         final EvaluationContext evaluationContext = new EvaluationContext(new ErrorHandler() {
             @Override
             public void raiseError(String message) throws CalculationException {
-                throw new CalculationException(message + "at position " + reader.getParsePosition() + "!");
+                throw new CalculationException(message.replace(".", " ") + "at position " + reader.getParsePosition() + "!");
             }
         });
         start(START, reader, evaluationContext);

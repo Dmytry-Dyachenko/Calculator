@@ -1,5 +1,6 @@
 
 import javaclasses.calculator.CalculationException;
+import javaclasses.calculator.impl.ErrorHandler;
 import javaclasses.calculator.impl.EvaluationContext;
 import javaclasses.calculator.impl.ExpressionReader;
 import javaclasses.calculator.impl.parser.BinaryOperatorParser;
@@ -8,7 +9,7 @@ import org.junit.Test;
 
 import static org.mockito.Mockito.*;
 
-public class Mockito {
+public class ParserFunctionalTest {
     final private EvaluationContext context = new EvaluationContext(new ErrorHandler() {
         @Override
         public void raiseError(String message) throws CalculationException {
