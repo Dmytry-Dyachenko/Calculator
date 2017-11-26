@@ -1,22 +1,15 @@
 
 import javaclasses.calculator.CalculationException;
-import javaclasses.calculator.Calculator;
-import javaclasses.calculator.ErrorHandler;
-import javaclasses.calculator.impl.BinaryOperator;
-import javaclasses.calculator.impl.CalculatorImpl;
+import javaclasses.calculator.impl.ErrorHandler;
 import javaclasses.calculator.impl.EvaluationContext;
 import javaclasses.calculator.impl.ExpressionReader;
 import javaclasses.calculator.impl.parser.BinaryOperatorParser;
-import javaclasses.calculator.impl.parser.FunctionParser;
 import javaclasses.calculator.impl.parser.NumberParser;
 import org.junit.Test;
 
-import javax.xml.stream.FactoryConfigurationError;
-
 import static org.mockito.Mockito.*;
-import static org.junit.Assert.*;
 
-public class Mockito {
+public class ParserFunctionalTest {
     final private EvaluationContext context = new EvaluationContext(new ErrorHandler() {
         @Override
         public void raiseError(String message) throws CalculationException {

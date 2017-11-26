@@ -1,7 +1,6 @@
 package javaclasses.calculator.impl;
 
 import javaclasses.calculator.CalculationException;
-import javaclasses.calculator.ErrorHandler;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -12,8 +11,8 @@ import java.util.Deque;
 public class EvaluationContext {
 
     private final Deque<Double> operandStack = new ArrayDeque<>();
-    private final Deque<Deque<BinaryOperator>> operatorStack = new ArrayDeque<>();
-    private final Deque<FunctionEvaluationContext> functions = new ArrayDeque<>();
+    private final Deque<Deque<BinaryOperator>> operatorStack = new ArrayDeque<>();//A stack for all nesting that appear in the expression.
+    private final Deque<FunctionEvaluationContext> functions = new ArrayDeque<>();//A stack with information about all functions in expression.
 
     private ErrorHandler handler;
 
@@ -80,7 +79,9 @@ public class EvaluationContext {
      * Calculating all expressions inside the brackets if it is the end.
      */
     public void pushClosingBracket() throws CalculationException {
-        pushDelimiter(); // Function closing bracket it is the last delimiter.
+        if (operatorStack.element().size() <= operandStack.size()) {
+            pushDelimiter(); // Function closing bracket it is the last delimiter.
+        }
         final double funcExecutingResult = functions.pop().executeFunction();
         operandStack.push(funcExecutingResult);
         operatorStack.pop();
@@ -91,11 +92,9 @@ public class EvaluationContext {
     }
 
     public void pushDelimiter() throws CalculationException {
-        if (operatorStack.size()<operandStack.size()) {
-            popAllOperators();
-            final double functionArgument = operandStack.pop();
-            functions.peek().getFunctionArguments().add(functionArgument);
-        }
+        popAllOperators();
+        final double functionArgument = operandStack.pop();
+        functions.peek().addArgumentToFunction(functionArgument);
     }
 
     private void popAllOperators() throws CalculationException {

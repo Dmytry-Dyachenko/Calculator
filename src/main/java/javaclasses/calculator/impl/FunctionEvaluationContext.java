@@ -2,12 +2,9 @@ package javaclasses.calculator.impl;
 
 
 import javaclasses.calculator.CalculationException;
-import javaclasses.calculator.ErrorHandler;
 import javaclasses.calculator.impl.function.FunctionFactory;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.List;
 
 /**
@@ -30,8 +27,8 @@ class FunctionEvaluationContext {
         this.functionName = functionName;
     }
 
-    List<Double> getFunctionArguments() {
-        return functionArguments;
+    void addArgumentToFunction(double argument) {
+        functionArguments.add(argument);
     }
 
     double executeFunction() throws CalculationException {
@@ -42,11 +39,13 @@ class FunctionEvaluationContext {
     private void isPossibleQuantityOfArguments() throws CalculationException {
         int minCount = function.getMinCountOfArguments();
         int maxCount = function.getMaxCountOfArguments();
+
         int currentCount = functionArguments.size();
+
         if (currentCount < minCount) {
-            handler.raiseError("Too less arguments ");
+            handler.raiseError("Too less arguments.");
         } else if (currentCount > maxCount) {
-            handler.raiseError("Too more arguments ");
+            handler.raiseError("Too more arguments.");
         }
     }
 }
