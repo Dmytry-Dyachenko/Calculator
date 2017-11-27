@@ -42,11 +42,6 @@ public class CalculatorTest {
         assertEquals(61, result, 0.001);
     }
 
-    @Test
-    public void testStringWithBracketsAndFunctions() throws CalculationException {
-        final double result = calculator.calculate("sum(5,3+2*(2+3^(1+(min(1,2)+2))),1)");
-        assertEquals(175, result, 0.001);
-    }
 
     @Test
     public void testExpressionWithSpaces() throws CalculationException {
